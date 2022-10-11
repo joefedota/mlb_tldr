@@ -25,7 +25,7 @@ class Arbitrator:
         for game in games_to_report:
             #for now take first highlight from highlights list for each game
             game_pk = game['game_id']
-            selected_highlight = highlights[game_pk][0]
+            selected_highlight = highlights[game_pk][len(highlights[game_pk])-1]
             self.download_highlight(game_pk, selected_highlight[1])
             content = game["summary"] + " Top Highlight -- " + selected_highlight[0]
             tweet = VideoTweet(self.twitter, str(game_pk) + ".mp4", content)
