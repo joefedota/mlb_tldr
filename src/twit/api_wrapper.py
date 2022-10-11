@@ -8,4 +8,4 @@ class APIWrapper:
             access_token=access_token,
             access_token_secret=access_secret)
         auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_secret)
-        self.cleintv1 = tweepy.API(auth)
+        self.clientv1 = tweepy.API(auth)

@@ -54,49 +54,9 @@ def main():
     arbitrator = Arbitrator(date.today(), reported, twitter, mlb_client)
     arbitrator.execute()
 
-    postable_highlights = {}
-    for game in games_today:
-        gamePk = game['game_id']
-        selected = None
-        if game['status'] == "Final" and gamePk not in reported:
-            highlights = statsapi.game_highlights(gamePk)
-            #find a highlight to post
-            for token in highlights.split("\n"):
-                if "https" in token:
-                    #this is a hack to get this video
-                    selected = token
-        postable_highlights[gamePk] = (selected, game['summary'])
-    
-    for k,v in postable_highlights.items():
-        vid = requests.get(v[0])
-        with open("highlight.mp4", 'wb') as f:
-            f.write(vid.content)
-        #returns a media object that we need the id of to post see here https://developer.twitter.com/en/docs/twitter-api/v1/data-dictionary/object-model/entities#media
-        media_id = apiv1.media_upload("highlight.mp4", media_category="tweet_video").media_id
-
-        client.create_tweet(media_ids=[media_id], text=v[1]+" Highlight: ")
-        reported.add(k)
-        #client.create_tweet(text=v[1]+" Highlight: ")
-        os.remove("highlight.mp4")
-
-    r.set("reported", pickle.dumps(reported))
-
-    # vid = requests.get("https://mlb-cuts-diamond.mlb.com/FORGE/2022/2022-10/05/d8a7c0c8-de293372-9f81e851-csvm-diamondx64-asset_1280x720_59_4000K.mp4")
-    # with open("highlight.mp4",'wb') as f:
-    #     # Saving received content as a png file in
-    #     # binary format
-    
-    #     # write the contents of the response (r.content)
-    #     # to a new file in binary mode.
-    #     f.write(vid.content)
-    
-    # #initialize mlb client
-
-    # #do some stuff
-    # #upload test video
-    # apiv1.media_upload("highlight.mp4", media_category="tweet_video")
-    # os.remove("highlight.mp4")
-    # os.remove("d8a7c0c8-de293372-9f81e851-csvm-diamondx64-asset_1280x720_59_4000K.mp4")
+    #TODO: reset reported set every day
+    #update reported in redis db
+    r.set("reported", pickle.dumps(arbitrator.reported))
 
 if __name__ == "__main__":
     main()

@@ -8,27 +8,30 @@ class MLBClient:
         games = statsapi.schedule(date.strftime("%Y-%m-%d"))
         filtered = []
         for game in games:
-            if (not status or status == game["status"]) and not game["game_id"] in reported: 
-                fitlered.append(game)
+            if (not status or status == game["status"]) and not (game["game_id"] in reported):
+                filtered.append(game)
         return filtered
     
-    def get_game_pks(self, reported, date=None, status=None);
+    def get_game_pks(self, games):
         game_pks = []
-        games = self.get_games(reported, date, status)
-         for game in games:
+        for game in games:
             game_pks.append(game['game_id'])
         return game_pks
     
-    def get_highlights(games_pks):
+    def get_highlights(self, games_pks):
         postable_highlights = {}
         for game_pk in games_pks:
             selected = None
-            highlights = statsapi.game_highlights(game_pk)
-            #find a highlight to post
-            for token in highlights.split("\n"):
-                if "https" in token:
-                    #this is a hack to get this video
-                    selected = token
-            postable_highlights[game_pk] = selected
+            highlights = statsapi.game_highlight_data(game_pk)
+            if len(highlights) < 1:
+                print("Error: " + str(game_pk) + " has no highlights")
+            #return all highlight data and decide in arbitrator which to post
+            tuples = []
+            for highlight in highlights:
+                #may need a check for playback availability in json response
+                tuples.append((highlight['blurb'], highlight['playbacks'][0]['url']))
+            #TODO -- replce tuples list with Highlight objects list
+            postable_highlights[game_pk] = tuples
+        return postable_highlights
     
     
