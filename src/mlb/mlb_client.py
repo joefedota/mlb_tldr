@@ -8,8 +8,7 @@ class MLBClient:
         games = statsapi.schedule(date.strftime("%Y-%m-%d"))
         filtered = []
         for game in games:
-            if (not status or status == game["status"]):
-                #add this back in to above condition asap and not (game["game_id"] in reported)
+            if (not status or status == game["status"]) and not (game["game_id"] in reported):
                 filtered.append(game)
         return filtered
     
