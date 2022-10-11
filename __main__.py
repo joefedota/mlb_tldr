@@ -46,7 +46,8 @@ def main():
     access_token = r.get("mlb_tldr_auth1_access_token")
     access_secret = r.get("mlb_tldr_auth1_secret")
     reported = r.get("reported")
-    reported = reported if reported else set()
+    reported = pickle.loads(reported) if reported else set()
+    
     
     twitter = APIWrapper(consumer_key, consumer_secret, access_token, access_secret)
     mlb_client = MLBClient()
