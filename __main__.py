@@ -23,9 +23,9 @@ import statsapi
 import urllib
 import pickle
 from datetime import date
-from twit.api_wrapper import APIWrapper
-from mlb.mlb_client import MLBClient
-from arbitration.arbitrator import Arbitrator
+from src.twit.api_wrapper import APIWrapper
+from src.mlb.mlb_client import MLBClient
+from src.arbitration.arbitrator import Arbitrator
 
 #setup token params
 client_id = os.environ.get("CLIENT_ID")
@@ -52,11 +52,12 @@ def main():
     mlb_client = MLBClient()
 
     arbitrator = Arbitrator(date.today(), reported, twitter, mlb_client)
-    arbitrator.execute()
-
-    #TODO: reset reported set every day
-    #update reported in redis db
-    r.set("reported", pickle.dumps(arbitrator.reported))
+    if arbitrator.execute():
+        #TODO: reset reported set every day
+        #update reported in redis db
+        r.set("reported", pickle.dumps(arbitrator.reported))
+    else:
+        print("No games left to report today")
 
 if __name__ == "__main__":
     main()

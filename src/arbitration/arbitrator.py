@@ -16,6 +16,8 @@ class Arbitrator:
         #this will ideally use datetimes and different application states to determine what kind of data we want
         #for now we are just looking for game results of finished games we haven't reported
         games_to_report = self.data_client.get_games(self.reported, self.datetime, "Final")
+        if not games_to_report:
+            return None
         games_to_report_pks = self.data_client.get_game_pks(games_to_report)
         highlights = self.data_client.get_highlights(games_to_report_pks)
 
