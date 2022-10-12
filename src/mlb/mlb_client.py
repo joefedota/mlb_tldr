@@ -7,8 +7,11 @@ class MLBClient:
     def get_games(self, reported, date=None, status=None):
         games = statsapi.schedule(date.strftime("%Y-%m-%d"))
         filtered = []
+        print("Reported games")
+        print(reported)
         for game in games:
             if (not status or status == game["status"]) and not (game["game_id"] in reported):
+                print("Adding game_pk " + str(game["game_id"] + " to queue for tweeting.")
                 filtered.append(game)
         return filtered
     
