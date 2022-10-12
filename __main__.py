@@ -22,7 +22,7 @@ import tweepy
 import statsapi
 import urllib
 import pickle
-from datetime import date
+from datetime import date, timedelta
 from src.twit.api_wrapper import APIWrapper
 from src.mlb.mlb_client import MLBClient
 from src.arbitration.arbitrator import Arbitrator
@@ -52,7 +52,7 @@ def main():
     twitter = APIWrapper(consumer_key, consumer_secret, access_token, access_secret)
     mlb_client = MLBClient()
 
-    arbitrator = Arbitrator(date.today(), reported, twitter, mlb_client)
+    arbitrator = Arbitrator(date.today()-timedelta(hourse=8), reported, twitter, mlb_client)
     if arbitrator.execute():
         #TODO: reset reported set every day
         #update reported in redis db
