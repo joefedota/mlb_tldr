@@ -27,7 +27,7 @@ class Arbitrator:
             game_pk = game['game_id']
             selected_highlight = highlights[game_pk][len(highlights[game_pk])-1]
             self.download_highlight(game_pk, selected_highlight[1])
-            content = game["summary"] + " Top Highlight -- " + selected_highlight[0]
+            content = game["summary"] + "\n\nHighlight -- " + selected_highlight[0]
             tweet = VideoTweet(self.twitter, str(game_pk) + ".mp4", content)
             if tweet.prepare_video():
                 resps.append(tweet.post())
