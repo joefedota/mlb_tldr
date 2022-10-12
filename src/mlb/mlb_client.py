@@ -9,6 +9,7 @@ class MLBClient:
         filtered = []
         print("Reported games")
         print(reported)
+        print(games)
         for game in games:
             if (not status or status == game["status"]) and not (game["game_id"] in reported):
                 print("Adding game_pk " + str(game["game_id"]) + " to queue for tweeting.")
