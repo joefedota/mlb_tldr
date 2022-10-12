@@ -22,7 +22,7 @@ import tweepy
 import statsapi
 import urllib
 import pickle
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from src.twit.api_wrapper import APIWrapper
 from src.mlb.mlb_client import MLBClient
 from src.arbitration.arbitrator import Arbitrator
