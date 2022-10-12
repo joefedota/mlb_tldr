@@ -52,7 +52,7 @@ def main():
     twitter = APIWrapper(consumer_key, consumer_secret, access_token, access_secret)
     mlb_client = MLBClient()
 
-    arbitrator = Arbitrator(date.now()-timedelta(hours=8), reported, twitter, mlb_client)
+    arbitrator = Arbitrator(datetime.now()-timedelta(hours=8), reported, twitter, mlb_client)
     if arbitrator.execute():
         #TODO: reset reported set every day
         #update reported in redis db
