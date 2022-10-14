@@ -26,7 +26,10 @@ class MLBClient:
         postable_highlights = {}
         for game_pk in games_pks:
             selected = None
-            highlights = statsapi.game_highlight_data(game_pk)
+            try:
+                highlights = statsapi.game_highlight_data(game_pk)
+            except:
+                return postable_highlights
             if len(highlights) < 1:
                 print("Error: " + str(game_pk) + " has no highlights")
             #return all highlight data and decide in arbitrator which to post
