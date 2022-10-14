@@ -30,17 +30,18 @@ class Arbitrator:
                 tweet = Tweet(self.twitter, game["summary"])
                 tweet.post()
                 self.reported.add(game["game_id"])
-            selected_highlight = highlights[game_pk][len(highlights[game_pk])-1]
-            self.download_highlight(game_pk, selected_highlight[1])
-            content = game["summary"] + "\n\nHighlight -- " + selected_highlight[0]
-            tweet = VideoTweet(self.twitter, str(game_pk) + ".mp4", content)
-            if tweet.prepare_video():
-                resps.append(tweet.post())
-                self.reported.add(game["game_id"])
             else:
-                print("Error: could not post video")
-            #either way delete video we just downloaded
-            os.remove(str(game_pk) + ".mp4")
+                selected_highlight = highlights[game_pk][len(highlights[game_pk])-1]
+                self.download_highlight(game_pk, selected_highlight[1])
+                content = game["summary"] + "\n\nHighlight -- " + selected_highlight[0]
+                tweet = VideoTweet(self.twitter, str(game_pk) + ".mp4", content)
+                if tweet.prepare_video():
+                    resps.append(tweet.post())
+                    self.reported.add(game["game_id"])
+                else:
+                    print("Error: could not post video")
+                #either way delete video we just downloaded
+                os.remove(str(game_pk) + ".mp4")
 
         return resps
     
