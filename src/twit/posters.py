@@ -5,7 +5,7 @@ class Tweet:
         self.content = content
     
     def post(self):
-        self.client.create_tweet(text=self.content)
+        self.client.clientv2.create_tweet(text=self.content)
 
 class VideoTweet(Tweet):
     video = None
