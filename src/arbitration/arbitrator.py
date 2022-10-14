@@ -1,4 +1,4 @@
-from src.twit.posters import VideoTweet
+from src.twit.posters import VideoTweet, Tweet
 import os
 import requests
 
@@ -26,6 +26,9 @@ class Arbitrator:
         for game in games_to_report:
             #for now take first highlight from highlights list for each game
             game_pk = game['game_id']
+            if len(highlights) < 1:
+                tweet = Tweet(self.twitter, game["summary"])
+                tweet.post()
             selected_highlight = highlights[game_pk][len(highlights[game_pk])-1]
             self.download_highlight(game_pk, selected_highlight[1])
             content = game["summary"] + "\n\nHighlight -- " + selected_highlight[0]
