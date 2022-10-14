@@ -28,7 +28,7 @@ class Arbitrator:
             game_pk = game['game_id']
             if len(highlights) < 1:
                 tweet = Tweet(self.twitter, game["summary"])
-                tweet.post()
+                resps.append(tweet.post())
                 self.reported.add(game["game_id"])
             else:
                 selected_highlight = highlights[game_pk][len(highlights[game_pk])-1]
