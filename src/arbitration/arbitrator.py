@@ -29,6 +29,7 @@ class Arbitrator:
             if len(highlights) < 1:
                 tweet = Tweet(self.twitter, game["summary"])
                 tweet.post()
+                self.reported.add(game["game_id"])
             selected_highlight = highlights[game_pk][len(highlights[game_pk])-1]
             self.download_highlight(game_pk, selected_highlight[1])
             content = game["summary"] + "\n\nHighlight -- " + selected_highlight[0]
