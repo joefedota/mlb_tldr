@@ -24,7 +24,7 @@ class VideoTweet(Tweet):
         if self.processing_info['state'] == 'succeeded':
             return True
         else:
-            print("Error: {}".format(self.processing_info['processing_info']['error']['message']))
+            print("Error: {}".format(self.processing_info))
             return False
 
     def post(self):

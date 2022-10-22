@@ -36,7 +36,7 @@ class MLBClient:
             tuples = []
             for highlight in highlights:
                 #may need a check for playback availability in json response
-                tuples.append((highlight['blurb'], highlight['playbacks'][0]['url']))
+                tuples.append((highlight['blurb'], highlight['playbacks'][0]['url'], highlight['date']))
             #TODO -- replce tuples list with Highlight objects list
             postable_highlights[game_pk] = tuples
         return postable_highlights
