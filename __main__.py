@@ -38,7 +38,7 @@ consumer_secret = os.environ.get("CONSUMER_SECRET")
 r = redis.from_url(redis_url)
 #redirect_uri = os.environ.get("REDIRECT_URI")
 token_url = "https://api.twitter.com/2/oauth2/token"
-keywords = [("condensed game", 11), ("walkoff", 10), ("game-winning", 10), ("game winning", 10), ("game winner", 10), ("game-winner", 10),
+keywords = [("walkoff", 10), ("game-winning", 10), ("game winning", 10), ("game winner", 10), ("game-winner", 10),
                 ("walk-off", 10), ("walk off", 10), ("grand slam", 4), ("grand-slam", 4), ("three-run", 3), ("two-run", 2), ("homerun", 2), ("home run", 2), ("homer", 2), ("rbi", 1),]
 
 def main():
