@@ -63,7 +63,7 @@ class Arbitrator:
         for highlight in highlights:
             timestamp = highlight[2]
             rank = self.highlight_ranker(highlight)
-            if rank > highest_rank:
+            if rank >= highest_rank:
                 highest_rank = rank
                 selected = highlight
             else:
